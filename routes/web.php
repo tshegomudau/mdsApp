@@ -22,4 +22,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
     Route::get('/year', ['as' => 'year',  'uses' => 'HolidayController@getYear']);
     Route::post('/year', ['as' => 'create',  'uses' => 'HolidayController@fetch']); 
+    Route::get('/hoiday/pdf', ['as' => 'holidays',  'uses' => 'HolidayController@createPDF']); 
+    
 });

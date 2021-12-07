@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Holiday;
+use PDF;
 
 class HolidayController extends Controller
 {
@@ -14,7 +15,19 @@ class HolidayController extends Controller
     public function index()
     {
         $holiday = auth()->user()->holiday();
-        return view('dashboard');
+        return view('dashboard', compact('holiday'));
+       // return view('dashboard');
+    }
+    // Generate PDF
+    public function createPDF() {
+        // retreive all records from db
+        $data = auth()->user()->holiday();
+
+        // share data to view
+        view('pdf_view', compact('data'));
+        $pdf = PDF::loadView('pdf_view');
+        // download PDF file with download method
+        return $pdf->download('pdf_file.pdf');
     }
     //
     public function getYear()
